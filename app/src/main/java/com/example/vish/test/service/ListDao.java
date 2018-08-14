@@ -21,4 +21,7 @@ public interface ListDao {
     //get all the data
     @Query("SELECT * FROM DataModel")
     List<DataModel> getDataList();
+
+    @Query("SELECT count(*) FROM DataModel")
+    int getDataCount();
 }

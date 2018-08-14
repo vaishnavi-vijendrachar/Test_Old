@@ -46,4 +46,12 @@ public class ListViewModel extends AndroidViewModel {
         List<DataModel> dm = (List<DataModel>) db.listDao().getDataList();
         return dm;
     }
+
+    public boolean getDataCount(){
+        int count = db.listDao().getDataCount();
+        if(count > 0){
+            return false;
+        }
+        return true;
+    }
 }

@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         if(dataModels != null) {
                             setTitle();
                             setListData(dataModels);
+
                             cacheData(dataModels, MainActivity.this);
                             dataPresent = true;
                         }
@@ -95,9 +96,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void cacheData(List<DataModel> dataModels, Context context) {
-        //save stuff into db
-        for(DataModel i : dataModels) {
-            viewModel.addDataToDb(i);
+        //check if data is already inserted
+        if(viewModel.getDataCount()) {
+            //save stuff into db
+            for (DataModel i : dataModels) {
+                viewModel.addDataToDb(i);
+            }
         }
 
     }
