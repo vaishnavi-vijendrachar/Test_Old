@@ -30,7 +30,6 @@ public class ListViewModel extends AndroidViewModel {
         this.listDataObservable = new MutableLiveData<>();
         context = application.getApplicationContext();
         db = Database.getDatabase(application.getApplicationContext());
-
     }
 
     public LiveData<List<DataModel>> getListDataObservable(){

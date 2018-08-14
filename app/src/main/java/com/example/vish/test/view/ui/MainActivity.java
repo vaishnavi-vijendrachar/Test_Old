@@ -25,7 +25,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private List<DataModel> list ;
-    private Database database;
     CoordinatorLayout coordinatorLayout;
     public static SwipeRefreshLayout mSwipeToRefresh;
     ListView listView;

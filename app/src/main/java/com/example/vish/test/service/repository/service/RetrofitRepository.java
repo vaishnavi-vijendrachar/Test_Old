@@ -23,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitRepository {
     List<DataModel> row;
-    Database database;
     IApiClient api;
     String title;
     Context context;
