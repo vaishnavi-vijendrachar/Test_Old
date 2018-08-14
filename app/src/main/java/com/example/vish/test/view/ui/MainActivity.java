@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private void getDataFromRepository() {
             if (NetworkUtil.checkNetworkState(this)) {
                 //subscribe to LiveData
+
                 viewModel.getListDataObservable().observe(this, new Observer<List<DataModel>>() {
                     @Override
                     public void onChanged(@Nullable List<DataModel> dataModels) {

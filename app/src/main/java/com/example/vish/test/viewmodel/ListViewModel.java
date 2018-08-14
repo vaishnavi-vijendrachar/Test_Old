@@ -6,6 +6,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 
@@ -21,17 +22,20 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class ListViewModel extends AndroidViewModel {
-  private MutableLiveData<List<DataModel>> listDataObservable = new MutableLiveData<>();
+  private MutableLiveData<List<DataModel>> listDataObservable;
   static Database db ;
+  Context context;
     public ListViewModel(@NonNull Application application) {
         super(application);
-        this.listDataObservable = (MutableLiveData<List<DataModel>>) new RetrofitRepository(application.getApplicationContext()).getDataList();
+        this.listDataObservable = new MutableLiveData<>();
+        context = application.getApplicationContext();
         db = Database.getDatabase(application.getApplicationContext());
 
     }
 
     public LiveData<List<DataModel>> getListDataObservable(){
-      return listDataObservable;
+        listDataObservable = (MutableLiveData<List<DataModel>>) new RetrofitRepository(context).getDataList();
+        return listDataObservable;
   }
 
   public void addDataToDb(DataModel dataModel){
