@@ -1,4 +1,4 @@
-package com.example.vish.test;
+package com.example.vish.test.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -1,22 +1,18 @@
 package com.example.vish.test.view.ui;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.vish.test.NetworkUtil;
+import com.example.vish.test.util.NetworkUtil;
 import com.example.vish.test.R;
 import com.example.vish.test.service.Database;
 import com.example.vish.test.service.model.DataModel;
@@ -32,11 +28,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private Database database;
     CoordinatorLayout coordinatorLayout;
     public static SwipeRefreshLayout mSwipeToRefresh;
-    //private ActivityMainBinding activityMainBinding;
     ListView listView;
     ListViewModel viewModel;
     static Boolean dataPresent= false;
-    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +52,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         //get data from server
         getDataFromRepository();
 
+    }
+
+    private void setTitle() {
+        //set action bar title
+        SharedPreferences pref = getSharedPreferences("TITLE_PREF",Context.MODE_PRIVATE);
+        getSupportActionBar().setTitle(pref.getString("TITLE","title"));
+
 
     }
 
@@ -67,14 +68,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 viewModel.getListDataObservable().observe(this, new Observer<List<DataModel>>() {
                     @Override
                     public void onChanged(@Nullable List<DataModel> dataModels) {
+                        //do something with the data - in this case set the adapter
                         if(dataModels != null) {
-                            setListData(dataModels); //do something with the data - in this case set the adapter
+                            setTitle();
+                            setListData(dataModels);
                             cacheData(dataModels, MainActivity.this);
                             dataPresent = true;
                         }
                     }
                 });
             } else {
+                //dipslay message
                 Snackbar snackbar = Snackbar.make(coordinatorLayout, "Network Not Available", Snackbar.LENGTH_SHORT);
                 snackbar.show();
                 checkDataExistance();
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void checkDataExistance() {
+        //get data from room
             if(dataPresent) {
                 list = new ArrayList<>();
                 list = viewModel.checkDataExistance();
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void cacheData(List<DataModel> dataModels, Context context) {
+        //save stuff into db
         for(DataModel i : dataModels) {
             viewModel.addDataToDb(i);
         }
@@ -128,4 +134,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mSwipeToRefresh.setRefreshing(false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTitle();
+    }
 }
