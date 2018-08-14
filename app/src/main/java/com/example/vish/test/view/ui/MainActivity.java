@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 });
             } else {
                 //dipslay message
-                Snackbar snackbar = Snackbar.make(coordinatorLayout, "Network Not Available", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(coordinatorLayout, R.string.network_unavailable, Snackbar.LENGTH_SHORT);
                 snackbar.show();
                 checkDataExistance();
             }
