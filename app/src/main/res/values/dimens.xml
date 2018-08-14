@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_margin">20dp</dimen>
+    <dimen name="layout_padding">10dp</dimen>
+    <dimen name="listview_divider">15dp</dimen>
+    <dimen name="layout_elevation">5dp</dimen>
+    <dimen name="margin_left_right">8dp</dimen>
+</resources>
