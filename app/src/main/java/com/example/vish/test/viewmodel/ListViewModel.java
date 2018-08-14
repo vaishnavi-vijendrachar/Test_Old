@@ -27,13 +27,14 @@ public class ListViewModel extends AndroidViewModel {
   Context context;
     public ListViewModel(@NonNull Application application) {
         super(application);
-        this.listDataObservable = (MutableLiveData<List<DataModel>>) new RetrofitRepository(application.getApplicationContext()).getDataList();
+        this.listDataObservable = new MutableLiveData<>();
         context = application.getApplicationContext();
         db = Database.getDatabase(application.getApplicationContext());
+
     }
 
     public LiveData<List<DataModel>> getListDataObservable(){
-
+        listDataObservable = (MutableLiveData<List<DataModel>>) new RetrofitRepository(context).getDataList();
         return listDataObservable;
   }
 
